@@ -1,8 +1,14 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 using ModelProject1;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace RepoProject1;
 
 public interface IRepoClass
@@ -64,15 +70,27 @@ public class RepoClass : IRepoClass
 
     public string NewUser(string username, string password)
     {
-        if (users.Any(x => x.Username == username))
-        {
-            return "Username already exists";
-        }
-        else
+        if (users.IsNullOrEmpty())
         {
             users.Add(new UserDataClass(username, password, "user"));
             return "User created";
         }
+        else
+        {
+            foreach (var item in users)
+            {
+                if (item.Username == username)
+                {
+                    return "Username already exists";
+                }
+                else
+                {
+                    users.Add(new UserDataClass(username, password, "user"));
+                    return "User created";
+                }
+            }
+        }
+        return "Something went wrong";
     }
 
     public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)

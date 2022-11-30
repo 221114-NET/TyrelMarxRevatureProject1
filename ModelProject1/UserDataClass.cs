@@ -1,6 +1,6 @@
-﻿using System.Security.Claims;
-
+﻿
 namespace ModelProject1;
+
 
 public interface IUserDataClass
 {
@@ -18,7 +18,6 @@ public class UserDataClass : IUserDataClass
         this.Password = password;
         this.Role = role;
     }
-
     public string Username { get; set; }
     public string Password { get; set; }
     public string Role { get; set; }
