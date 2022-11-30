@@ -44,11 +44,37 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
-        [HttpGet("GetUserReimbursements")]
-        public ActionResult<List<ReimbursementDataClass>> GetUserReimbursements()
+        [HttpPost("GetUserReimbursements")]
+        public List<ReimbursementDataClass> GetUserReimbursements()
         {
             List<ReimbursementDataClass> result = _businessClass.GetUserReimbursements();
-            return Ok(result);
+            return result;
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
+        [HttpPost("UpdateUserInformation")]
+        public List<ReimbursementDataClass> UpdateUserInformation()
+        {
+            List<ReimbursementDataClass> result = _businessClass.UpdateUserInformation();
+            return result;
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+        [HttpPost("ManagerGetAllReimbursements")]
+        public List<ReimbursementDataClass> ManagerGetAllReimbursements()
+        {
+            List<ReimbursementDataClass> result = _businessClass.ManagerGetAllReimbursements();
+            return result;
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+        [HttpPost("ManagerUpdateReimbursement")]
+        public List<ReimbursementDataClass> ManagerUpdateReimbursement()
+        {
+            List<ReimbursementDataClass> result = _businessClass.ManagerUpdateReimbursement();
+            return result;
+        }
+
     }
 }

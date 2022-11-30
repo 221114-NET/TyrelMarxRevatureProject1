@@ -9,8 +9,11 @@ public interface IBusinessLayerClass
 {
     string AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements();
+    List<ReimbursementDataClass> ManagerGetAllReimbursements();
+    List<ReimbursementDataClass> ManagerUpdateReimbursement();
     string NewUser(string username, string password);
     ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement);
+    List<ReimbursementDataClass> UpdateUserInformation();
 }
 
 public class BusinessLayerClass : IBusinessLayerClass
@@ -42,12 +45,22 @@ public class BusinessLayerClass : IBusinessLayerClass
             user.validUserData = false;
             return user;
         }*/
-        
+
     }
 
     public List<ReimbursementDataClass> GetUserReimbursements()
     {
         return _repoClass.GetUserReimbursements();
+    }
+
+    public List<ReimbursementDataClass> ManagerGetAllReimbursements()
+    {
+        return _repoClass.ManagerGetAllReimbursements();
+    }
+
+    public List<ReimbursementDataClass> ManagerUpdateReimbursement()
+    {
+        return _repoClass.ManagerUpdateReimbursement();
     }
 
     public string NewUser(string username, string password)
@@ -57,7 +70,7 @@ public class BusinessLayerClass : IBusinessLayerClass
      @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 
         Regex re = new Regex(strRegex);
-        if (re.IsMatch(username) && password.Length > 1 && password!= null)
+        if (re.IsMatch(username) && password.Length > 1 && password != null)
         {
             return _repoClass.NewUser(username, password);
         }
@@ -72,6 +85,11 @@ public class BusinessLayerClass : IBusinessLayerClass
     public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)
     {
         return _repoClass.ReimbursementRequest(reimbursement);
+    }
+
+    public List<ReimbursementDataClass> UpdateUserInformation()
+    {
+        return _repoClass.UpdateUserInformation();
     }
 }
 
