@@ -7,6 +7,7 @@ namespace ModelProject1
 {
     public class ReimbursementDataClass
     {
+        public string? userName { get; set; }
         public string? ticketType { get; set; }
         public double reimbursementAmmount { get; set; }
         public string? approvedOrRejected { get; set; }
@@ -14,6 +15,14 @@ namespace ModelProject1
 
         public ReimbursementDataClass(string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
         {
+            this.ticketType = ticketType;
+            this.reimbursementAmmount = reimbursementAmmount;
+            this.approvedOrRejected = approvedOrRejected;
+            this.pendingStatus = pendingStatus;
+        }
+        public ReimbursementDataClass(string? userName, string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
+        {
+            this.userName = userName;
             this.ticketType = ticketType;
             this.reimbursementAmmount = reimbursementAmmount;
             this.approvedOrRejected = approvedOrRejected;

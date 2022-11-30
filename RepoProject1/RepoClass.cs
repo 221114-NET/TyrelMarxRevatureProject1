@@ -14,7 +14,7 @@ namespace RepoProject1;
 public interface IRepoClass
 {
     string AuthUserLogin(string username, string password);
-    List<ReimbursementDataClass> GetUserReimbursements();
+    List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
     List<ReimbursementDataClass> ManagerUpdateReimbursement();
     string NewUser(string username, string password);
@@ -27,18 +27,21 @@ public class RepoClass : IRepoClass
     //FIXME temp storage for user data when database is added remove this
     List<UserDataClass> usersList = new List<UserDataClass>();
     List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-
+    List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
+    //end of temp storage
 
     public string AuthUserLogin(string username, string password)
     {
+        //FIXME temp storage for user data when database is added remove this
         if (!usersList.Exists(x => x.Username == "admin" && x.Password == "admin"))
         {
             usersList.Add(new UserDataClass("admin", "admin", "admin"));
+            usersList.Add(new UserDataClass("user", "user", "user"));
         }
-        //TODO: Add code to check if user exists in database
+        //end temp storage
         if (usersList.Exists(x => x.Username == username && x.Password == password))
         {
-            #region testing
+            #region Authentication
             var claims = new[]
             {
             new Claim(ClaimTypes.NameIdentifier, username),
@@ -67,15 +70,35 @@ public class RepoClass : IRepoClass
         }
     }
 
-    public List<ReimbursementDataClass> GetUserReimbursements()
+    public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
-        //TODO pull current user reimbursements from database
-        throw new NotImplementedException();
+        //TODO pull current user reimbursements from database and remove this
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, "", true));
+        //end of remove
+
+        foreach (var item in reimbursementDataList)
+        {
+            if (item.userName == currentUser)
+            {
+                reimbursementDataList2.Add(item);
+            }
+        }
+
+        return reimbursementDataList2;
     }
 
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
-        throw new NotImplementedException();
+        //TODO remove these and use data from database
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, "", true));
+        //end of remove
+        return reimbursementDataList;
     }
 
     public List<ReimbursementDataClass> ManagerUpdateReimbursement()
@@ -85,27 +108,19 @@ public class RepoClass : IRepoClass
 
     public string NewUser(string username, string password)
     {
-        if (usersList.IsNullOrEmpty())
+        foreach (var item in usersList)
         {
-            usersList.Add(new UserDataClass(username, password, "user"));
-            return "User created";
-        }
-        else
-        {
-            foreach (var item in usersList)
+            if (item.Username == username)
             {
-                if (item.Username == username)
-                {
-                    return "Username already exists";
-                }
-                else
-                {
-                    usersList.Add(new UserDataClass(username, password, "user"));
-                    return "User created";
-                }
+                return "Username already exists";
+            }
+            else
+            {
+                usersList.Add(new UserDataClass(username, password, "user"));
+                return "User created";
             }
         }
-        return "Something went wrong";
+        return "User created";
     }
 
     public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)
@@ -113,7 +128,7 @@ public class RepoClass : IRepoClass
         //TODO put reimbursement request into database
         //get data from database and return it
         //if the reimbursementDataList is empty return empty list
-        
+
         throw new NotImplementedException();
     }
 

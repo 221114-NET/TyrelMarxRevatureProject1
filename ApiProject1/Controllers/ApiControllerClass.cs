@@ -44,10 +44,13 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
-        [HttpPost("GetUserReimbursements")]
+        [HttpGet("GetUserReimbursements")]
         public List<ReimbursementDataClass> GetUserReimbursements()
         {
-            List<ReimbursementDataClass> result = _businessClass.GetUserReimbursements();
+            //TODO this is how to get the userID of the currently logged in user
+            string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            
+            List<ReimbursementDataClass> result = _businessClass.GetUserReimbursements(currentUser);
             return result;
         }
 
@@ -75,6 +78,6 @@ namespace ApiProject1.Controllers
             List<ReimbursementDataClass> result = _businessClass.ManagerUpdateReimbursement();
             return result;
         }
-
+        
     }
 }

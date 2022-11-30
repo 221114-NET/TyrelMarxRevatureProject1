@@ -8,7 +8,7 @@ namespace BusinessProject1;
 public interface IBusinessLayerClass
 {
     string AuthUserLogin(string username, string password);
-    List<ReimbursementDataClass> GetUserReimbursements();
+    List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
     List<ReimbursementDataClass> ManagerUpdateReimbursement();
     string NewUser(string username, string password);
@@ -48,10 +48,11 @@ public class BusinessLayerClass : IBusinessLayerClass
 
     }
 
-    public List<ReimbursementDataClass> GetUserReimbursements()
+    public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
-        return _repoClass.GetUserReimbursements();
+        return _repoClass.GetUserReimbursements(currentUser);
     }
+
 
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
