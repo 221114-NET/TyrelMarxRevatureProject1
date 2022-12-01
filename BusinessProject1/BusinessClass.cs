@@ -10,10 +10,10 @@ public interface IBusinessLayerClass
     string AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
-    List<ReimbursementDataClass> ManagerUpdateReimbursement();
+    ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement);
     string NewUser(string username, string password);
-    ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement);
-    List<ReimbursementDataClass> UpdateUserInformation();
+    ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement, string LogedInUserName);
+    List<ReimbursementDataClass> UpdateUserInformation(string currentUser);
 }
 
 public class BusinessLayerClass : IBusinessLayerClass
@@ -28,24 +28,6 @@ public class BusinessLayerClass : IBusinessLayerClass
     public string AuthUserLogin(string username, string password)
     {
         return _repoClass.AuthUserLogin(username, password);
-
-        /**string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-     @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-     @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-
-
-        Regex re = new Regex(strRegex);
-        if (re.IsMatch(user.username) && user.password.Length > 1 && user.password != null)
-        {
-            user.validUserData = true;
-        }
-        else
-        {
-            //if email is not valid tell user to enter valid email
-            user.validUserData = false;
-            return user;
-        }*/
-
     }
 
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
@@ -59,9 +41,9 @@ public class BusinessLayerClass : IBusinessLayerClass
         return _repoClass.ManagerGetAllReimbursements();
     }
 
-    public List<ReimbursementDataClass> ManagerUpdateReimbursement()
+    public ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement)
     {
-        return _repoClass.ManagerUpdateReimbursement();
+        return _repoClass.ManagerUpdateReimbursement(reimbursement);
     }
 
     public string NewUser(string username, string password)
@@ -80,17 +62,18 @@ public class BusinessLayerClass : IBusinessLayerClass
             //if email is not valid tell user to enter valid email
             return "Invalid email or password";
         }
-
     }
 
-    public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)
+    public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement, string LogedInUserName)
     {
+        reimbursement.Username = LogedInUserName;
+        reimbursement.Approved = false;
         return _repoClass.ReimbursementRequest(reimbursement);
     }
 
-    public List<ReimbursementDataClass> UpdateUserInformation()
+    public List<ReimbursementDataClass> UpdateUserInformation(string currentUser)
     {
-        return _repoClass.UpdateUserInformation();
+        return _repoClass.UpdateUserInformation(currentUser);
     }
 }
 

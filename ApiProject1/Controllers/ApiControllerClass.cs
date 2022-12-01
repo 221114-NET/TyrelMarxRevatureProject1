@@ -39,18 +39,15 @@ namespace ApiProject1.Controllers
         [HttpPost("ReimbursementRequest")]
         public ActionResult<ReimbursementDataClass> ReimbursementRequest(ReimbursementDataClass reimbursement)
         {
-            ReimbursementDataClass result = _businessClass.ReimbursementRequest(reimbursement);
-            return Created("data ", result);
+            string LogedInUserName = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            return Created("Request Created ", _businessClass.ReimbursementRequest(reimbursement, LogedInUserName));
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
         [HttpGet("GetUserReimbursements")]
         public List<ReimbursementDataClass> GetUserReimbursements()
         {
-            //TODO this is how to get the userID of the currently logged in user
-
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-
             return _businessClass.GetUserReimbursements(currentUser);
         }
 
@@ -58,10 +55,10 @@ namespace ApiProject1.Controllers
         [HttpPost("UpdateUserInformation")]
         public List<ReimbursementDataClass> UpdateUserInformation()
         {
-            List<ReimbursementDataClass> result = _businessClass.UpdateUserInformation();
+            string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            List<ReimbursementDataClass> result = _businessClass.UpdateUserInformation(currentUser);
             return result;
         }
-
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         [HttpGet("ManagerGetAllReimbursements")]
@@ -73,11 +70,9 @@ namespace ApiProject1.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         [HttpPost("ManagerUpdateReimbursement")]
-        public List<ReimbursementDataClass> ManagerUpdateReimbursement()
+        public ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement)
         {
-            List<ReimbursementDataClass> result = _businessClass.ManagerUpdateReimbursement();
-            return result;
+            return _businessClass.ManagerUpdateReimbursement(reimbursement);
         }
-
     }
 }

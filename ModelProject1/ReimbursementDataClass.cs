@@ -18,24 +18,27 @@ namespace ModelProject1
         public double ReimbursementAmmount { get; set; }
 
         [JsonPropertyName("approvedorrejected")]
-        public string? ApprovedOrRejected { get; set; }
+        public bool Approved { get; set; }
 
         [JsonPropertyName("pendingstatus")]
         public bool PendingStatus { get; set; } = true;
 
-        public ReimbursementDataClass(string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
+        public ReimbursementDataClass()
+        {
+        }
+        public ReimbursementDataClass(string? ticketType, double reimbursementAmmount, bool approved, bool pendingStatus)
         {
             this.TicketType = ticketType;
             this.ReimbursementAmmount = reimbursementAmmount;
-            this.ApprovedOrRejected = approvedOrRejected;
+            this.Approved = approved;
             this.PendingStatus = pendingStatus;
         }
-        public ReimbursementDataClass(string? userName, string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
+        public ReimbursementDataClass(string? userName, string? ticketType, double reimbursementAmmount, bool approved, bool pendingStatus)
         {
             this.Username = userName;
             this.TicketType = ticketType;
             this.ReimbursementAmmount = reimbursementAmmount;
-            this.ApprovedOrRejected = approvedOrRejected;
+            this.Approved = approved;
             this.PendingStatus = pendingStatus;
         }
     }

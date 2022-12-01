@@ -16,10 +16,10 @@ public interface IRepoClass
     string AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
-    List<ReimbursementDataClass> ManagerUpdateReimbursement();
+    ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement);
     string NewUser(string username, string password);
     ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement);
-    List<ReimbursementDataClass> UpdateUserInformation();
+    List<ReimbursementDataClass> UpdateUserInformation(string currentUser);
 }
 
 public class RepoClass : IRepoClass
@@ -35,7 +35,7 @@ public class RepoClass : IRepoClass
         //FIXME temp storage for user data when database is added remove this
         if (!usersList.Exists(x => x.Username == "admin" && x.Password == "admin"))
         {
-            usersList.Add(new UserDataClass("admin", "admin", "admin"));
+            usersList.Add(new UserDataClass("Admin", "Admin", "admin"));
             usersList.Add(new UserDataClass("user", "user", "user"));
         }
         //end temp storage
@@ -73,10 +73,10 @@ public class RepoClass : IRepoClass
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
         //TODO pull current user reimbursements from database and remove this
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, "", true));
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, "", true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, "", true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, false, true));
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, false, true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, false, true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, false, true));
         //end of remove
 
         foreach (var item in reimbursementDataList)
@@ -93,21 +93,23 @@ public class RepoClass : IRepoClass
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
         //TODO remove these and use data from database
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, "", true));
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, "", true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, "", true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, "", true));
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, false, true));
+        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, false, true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, false, true));
+        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, false, true));
         //end of remove
         return reimbursementDataList;
     }
 
-    public List<ReimbursementDataClass> ManagerUpdateReimbursement()
+    public ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement)
     {
+        //TODO tell the database to update the reimbursement if pendingStatus = true else throw error
         throw new NotImplementedException();
     }
 
     public string NewUser(string username, string password)
     {
+        //TODO add new user to database and remove this
         foreach (var item in usersList)
         {
             if (item.Username == username)
@@ -132,8 +134,9 @@ public class RepoClass : IRepoClass
         throw new NotImplementedException();
     }
 
-    public List<ReimbursementDataClass> UpdateUserInformation()
+    public List<ReimbursementDataClass> UpdateUserInformation(string currentUser)
     {
+        //TODO pull current user information from database and make sure current user is the one updating the information then update user information
         throw new NotImplementedException();
     }
 }
