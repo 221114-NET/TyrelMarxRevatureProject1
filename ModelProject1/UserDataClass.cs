@@ -4,9 +4,9 @@ namespace ModelProject1;
 
 public interface IUserDataClass
 {
-    string Username { get; set; }
-    string Password { get; set; }
-    string Role { get; set; }
+    string username { get; set; }
+    string password { get; set; }
+    string role { get; set; }
 
 }
 
@@ -14,13 +14,13 @@ public class UserDataClass : IUserDataClass
 {
     public UserDataClass(string username, string password, string role)
     {
-        this.Username = username;
-        this.Password = password;
-        this.Role = role;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string Role { get; set; }
+    public string username { get; set; }
+    public string password { get; set; }
+    public string role { get; set; }
     
 
 }

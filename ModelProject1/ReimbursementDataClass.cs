@@ -7,26 +7,26 @@ namespace ModelProject1
 {
     public class ReimbursementDataClass
     {
-        public string? userName { get; set; }
-        public string? ticketType { get; set; }
-        public double reimbursementAmmount { get; set; }
-        public string? approvedOrRejected { get; set; }
-        public bool pendingStatus { get; set; } = true;
+        public string? username { get; set; }
+        public string? tickettype { get; set; }
+        public double reimbursementammount { get; set; }
+        public string? approvedorrejected { get; set; }
+        public bool pendingstatus { get; set; } = true;
 
         public ReimbursementDataClass(string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
         {
-            this.ticketType = ticketType;
-            this.reimbursementAmmount = reimbursementAmmount;
-            this.approvedOrRejected = approvedOrRejected;
-            this.pendingStatus = pendingStatus;
+            this.tickettype = ticketType;
+            this.reimbursementammount = reimbursementAmmount;
+            this.approvedorrejected = approvedOrRejected;
+            this.pendingstatus = pendingStatus;
         }
         public ReimbursementDataClass(string? userName, string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
         {
-            this.userName = userName;
-            this.ticketType = ticketType;
-            this.reimbursementAmmount = reimbursementAmmount;
-            this.approvedOrRejected = approvedOrRejected;
-            this.pendingStatus = pendingStatus;
+            this.username = userName;
+            this.tickettype = ticketType;
+            this.reimbursementammount = reimbursementAmmount;
+            this.approvedorrejected = approvedOrRejected;
+            this.pendingstatus = pendingStatus;
         }
     }
 

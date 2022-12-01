@@ -20,7 +20,7 @@ namespace ApiProject1.Controllers
         {
             _businessClass = businessClass;
         }
-        
+
 
         [HttpPost("NewUser")]
         public string NewUser(string username, string password)
@@ -48,10 +48,10 @@ namespace ApiProject1.Controllers
         public List<ReimbursementDataClass> GetUserReimbursements()
         {
             //TODO this is how to get the userID of the currently logged in user
+
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            
-            List<ReimbursementDataClass> result = _businessClass.GetUserReimbursements(currentUser);
-            return result;
+
+            return _businessClass.GetUserReimbursements(currentUser);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
@@ -64,7 +64,7 @@ namespace ApiProject1.Controllers
 
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-        [HttpPost("ManagerGetAllReimbursements")]
+        [HttpGet("ManagerGetAllReimbursements")]
         public List<ReimbursementDataClass> ManagerGetAllReimbursements()
         {
             List<ReimbursementDataClass> result = _businessClass.ManagerGetAllReimbursements();
@@ -78,6 +78,6 @@ namespace ApiProject1.Controllers
             List<ReimbursementDataClass> result = _businessClass.ManagerUpdateReimbursement();
             return result;
         }
-        
+
     }
 }
