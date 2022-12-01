@@ -1,5 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ModelProject1;
 using RepoProject1;
 
@@ -18,6 +22,11 @@ public interface IBusinessLayerClass
 
 public class BusinessLayerClass : IBusinessLayerClass
 {
+    //FIXME temp storage for user data when database is added remove this
+    List<UserDataClass> usersList = new List<UserDataClass>();
+    List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
+    List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
+    //end of temp storage
     private readonly IRepoClass _repoClass;
 
     public BusinessLayerClass(IRepoClass irepoClass)
@@ -27,7 +36,44 @@ public class BusinessLayerClass : IBusinessLayerClass
 
     public string AuthUserLogin(string username, string password)
     {
-        return _repoClass.AuthUserLogin(username, password);
+        //FIXME temp storage for user data when database is added remove this
+        //check if repo has users/password return true or false
+        //_repoClass.AuthUserLogin(username, password)
+        if (!usersList.Exists(x => x.Username == "admin" && x.Password == "admin"))
+        {
+            usersList.Add(new UserDataClass("Admin", "Admin", "admin"));
+            usersList.Add(new UserDataClass("user", "user", "user"));
+        }
+        //end temp storage
+        if (usersList.Exists(x => x.Username == username && x.Password == password))
+        {
+            #region Authentication
+            var claims = new[]
+            {
+            new Claim(ClaimTypes.NameIdentifier, username),
+            new Claim(ClaimTypes.Role, "user")
+        };
+
+            var token = new JwtSecurityToken
+            (
+                issuer: "https://localhost:5117",
+                audience: "https://localhost:5117",
+                claims: claims,
+                expires: DateTime.UtcNow.AddDays(60),
+                notBefore: DateTime.UtcNow,
+                signingCredentials: new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication")),
+                    SecurityAlgorithms.HmacSha256)
+            );
+
+            string LoginToken = new JwtSecurityTokenHandler().WriteToken(token);
+            return LoginToken;
+            #endregion
+        }
+        else
+        {
+            return "User not found";
+        }
     }
 
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)

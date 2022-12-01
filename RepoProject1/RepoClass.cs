@@ -13,7 +13,7 @@ namespace RepoProject1;
 
 public interface IRepoClass
 {
-    string AuthUserLogin(string username, string password);
+    bool AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
     ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement);
@@ -30,44 +30,10 @@ public class RepoClass : IRepoClass
     List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
     //end of temp storage
 
-    public string AuthUserLogin(string username, string password)
+    public bool AuthUserLogin(string username, string password)
     {
-        //FIXME temp storage for user data when database is added remove this
-        if (!usersList.Exists(x => x.Username == "admin" && x.Password == "admin"))
-        {
-            usersList.Add(new UserDataClass("Admin", "Admin", "admin"));
-            usersList.Add(new UserDataClass("user", "user", "user"));
-        }
-        //end temp storage
-        if (usersList.Exists(x => x.Username == username && x.Password == password))
-        {
-            #region Authentication
-            var claims = new[]
-            {
-            new Claim(ClaimTypes.NameIdentifier, username),
-            new Claim(ClaimTypes.Role, "user")
-        };
-
-            var token = new JwtSecurityToken
-            (
-                issuer: "https://localhost:5117",
-                audience: "https://localhost:5117",
-                claims: claims,
-                expires: DateTime.UtcNow.AddDays(60),
-                notBefore: DateTime.UtcNow,
-                signingCredentials: new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication")),
-                    SecurityAlgorithms.HmacSha256)
-            );
-
-            string LoginToken = new JwtSecurityTokenHandler().WriteToken(token);
-            return LoginToken;
-            #endregion
-        }
-        else
-        {
-            return "User not found";
-        }
+        //check if user and pass is in database and return true or false
+        throw new NotImplementedException();
     }
 
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
@@ -110,19 +76,10 @@ public class RepoClass : IRepoClass
     public string NewUser(string username, string password)
     {
         //TODO add new user to database and remove this
-        foreach (var item in usersList)
-        {
-            if (item.Username == username)
-            {
-                return "Username already exists";
-            }
-            else
-            {
-                usersList.Add(new UserDataClass(username, password, "user"));
-                return "User created";
-            }
-        }
+        //if user is not already in the database
+        usersList.Add(new UserDataClass(username, password, "user"));
         return "User created";
+
     }
 
     public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)
