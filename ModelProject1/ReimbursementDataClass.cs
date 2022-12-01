@@ -1,32 +1,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ModelProject1
 {
     public class ReimbursementDataClass
     {
-        public string? username { get; set; }
-        public string? tickettype { get; set; }
-        public double reimbursementammount { get; set; }
-        public string? approvedorrejected { get; set; }
-        public bool pendingstatus { get; set; } = true;
+        [JsonPropertyName("username")]
+        public string? Username { get; set; }
+
+        [JsonPropertyName("tickettype")]
+        public string? TicketType { get; set; }
+
+        [JsonPropertyName("reimbursementammount")]
+        public double ReimbursementAmmount { get; set; }
+
+        [JsonPropertyName("approvedorrejected")]
+        public string? ApprovedOrRejected { get; set; }
+
+        [JsonPropertyName("pendingstatus")]
+        public bool PendingStatus { get; set; } = true;
 
         public ReimbursementDataClass(string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
         {
-            this.tickettype = ticketType;
-            this.reimbursementammount = reimbursementAmmount;
-            this.approvedorrejected = approvedOrRejected;
-            this.pendingstatus = pendingStatus;
+            this.TicketType = ticketType;
+            this.ReimbursementAmmount = reimbursementAmmount;
+            this.ApprovedOrRejected = approvedOrRejected;
+            this.PendingStatus = pendingStatus;
         }
         public ReimbursementDataClass(string? userName, string? ticketType, double reimbursementAmmount, string? approvedOrRejected, bool pendingStatus)
         {
-            this.username = userName;
-            this.tickettype = ticketType;
-            this.reimbursementammount = reimbursementAmmount;
-            this.approvedorrejected = approvedOrRejected;
-            this.pendingstatus = pendingStatus;
+            this.Username = userName;
+            this.TicketType = ticketType;
+            this.ReimbursementAmmount = reimbursementAmmount;
+            this.ApprovedOrRejected = approvedOrRejected;
+            this.PendingStatus = pendingStatus;
         }
     }
 

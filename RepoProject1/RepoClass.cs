@@ -33,13 +33,13 @@ public class RepoClass : IRepoClass
     public string AuthUserLogin(string username, string password)
     {
         //FIXME temp storage for user data when database is added remove this
-        if (!usersList.Exists(x => x.username == "admin" && x.password == "admin"))
+        if (!usersList.Exists(x => x.Username == "admin" && x.Password == "admin"))
         {
             usersList.Add(new UserDataClass("admin", "admin", "admin"));
             usersList.Add(new UserDataClass("user", "user", "user"));
         }
         //end temp storage
-        if (usersList.Exists(x => x.username == username && x.password == password))
+        if (usersList.Exists(x => x.Username == username && x.Password == password))
         {
             #region Authentication
             var claims = new[]
@@ -81,7 +81,7 @@ public class RepoClass : IRepoClass
 
         foreach (var item in reimbursementDataList)
         {
-            if (item.username == currentUser)
+            if (item.Username == currentUser)
             {
                 reimbursementDataList2.Add(item);
             }
@@ -110,7 +110,7 @@ public class RepoClass : IRepoClass
     {
         foreach (var item in usersList)
         {
-            if (item.username == username)
+            if (item.Username == username)
             {
                 return "Username already exists";
             }
