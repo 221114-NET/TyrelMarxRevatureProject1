@@ -39,19 +39,20 @@ public class BusinessLayerClass : IBusinessLayerClass
         //FIXME temp storage for user data when database is added remove this
         //check if repo has users/password return true or false
         //_repoClass.AuthUserLogin(username, password)
-        if (!usersList.Exists(x => x.Username == "admin" && x.Password == "admin"))
-        {
-            usersList.Add(new UserDataClass("Admin", "Admin", "admin"));
-            usersList.Add(new UserDataClass("user", "user", "user"));
-        }
+        // if (!usersList.Exists(x => x.UserName == "admin" && x.UserPassword == "admin"))
+        // {
+        //     usersList.Add(new UserDataClass("Admin", "Admin", "admin"));
+        //     usersList.Add(new UserDataClass("user", "user", "user"));
+        // }
         //end temp storage
-        if (usersList.Exists(x => x.Username == username && x.Password == password))
+        string result = _repoClass.AuthUserLogin(username, password);
+        if (!result.Equals("false"))
         {
             #region Authentication
             var claims = new[]
             {
             new Claim(ClaimTypes.NameIdentifier, username),
-            new Claim(ClaimTypes.Role, "user")
+            new Claim(ClaimTypes.Role, result)
         };
 
             var token = new JwtSecurityToken
@@ -112,8 +113,8 @@ public class BusinessLayerClass : IBusinessLayerClass
 
     public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement, string LogedInUserName)
     {
-        reimbursement.Username = LogedInUserName;
-        reimbursement.Approved = false;
+        reimbursement.UserName = LogedInUserName;
+        reimbursement.ReimbursementApproved = false;
         return _repoClass.ReimbursementRequest(reimbursement);
     }
 

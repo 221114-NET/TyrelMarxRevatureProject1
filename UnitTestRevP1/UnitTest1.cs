@@ -14,9 +14,9 @@ public class UnitTest1
 {
     internal class testRepo : IRepoClass
     {
-        public bool AuthUserLogin(string username, string password)
+        public string AuthUserLogin(string username, string password)
         {
-            return true;
+            return "false";
         }
 
         public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)

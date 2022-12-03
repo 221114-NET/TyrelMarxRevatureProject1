@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using ModelProject1;
 using RepoProject1;
 namespace ApiProject1;
+using Microsoft.Data.SqlClient;
 
 public class Program
 {
@@ -17,8 +18,8 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
-        
-
+    
+    
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         //removed this line to add the stuff under testing

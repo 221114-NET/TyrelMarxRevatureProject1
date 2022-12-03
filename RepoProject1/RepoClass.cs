@@ -4,16 +4,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using ModelProject1;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
+
 namespace RepoProject1;
 
 public interface IRepoClass
 {
-    bool AuthUserLogin(string username, string password);
+    string AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
     ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement);
@@ -24,46 +26,124 @@ public interface IRepoClass
 
 public class RepoClass : IRepoClass
 {
-    //FIXME temp storage for user data when database is added remove this
-    List<UserDataClass> usersList = new List<UserDataClass>();
-    List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-    List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
-    //end of temp storage
+    // //FIXME temp storage for user data when database is added remove this
+    // List<UserDataClass> usersList = new List<UserDataClass>();
+    // List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
+    // List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
+    // //end of temp storage
+    string AzureConnectionString = "Server=tcp:revdbo.database.windows.net,1433;Initial Catalog=RevP1;Persist Security Info=False;User ID=tyrel;Password=password1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
-    public bool AuthUserLogin(string username, string password)
+
+    public string AuthUserLogin(string username, string password)
     {
-        //check if user and pass is in database and return true or false
-        throw new NotImplementedException();
+        String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = '{username}' and UserPassword = '{password}'";
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                return reader.GetString(2);
+                            }
+                        }
+                        else
+                        {
+                            return "false";
+                        }
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+            return "false";
+        }
+        return "false";
     }
 
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
-        //TODO pull current user reimbursements from database and remove this
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, false, true));
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, false, true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, false, true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, false, true));
-        //end of remove
+        List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
+        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserName = '{currentUser}'";
 
-        foreach (var item in reimbursementDataList)
+        try
         {
-            if (item.Username == currentUser)
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
             {
-                reimbursementDataList2.Add(item);
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            int i = 0;
+                            while (reader.Read())
+                            {
+                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDouble(3), reader.GetBoolean(4), reader.GetBoolean(5)));
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            return reimbursementDataList;
+                        }
+                    }
+                }
             }
         }
-
-        return reimbursementDataList2;
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+            return reimbursementDataList;
+        }
+        return reimbursementDataList;
     }
 
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
-        //TODO remove these and use data from database
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "car", 12.1, false, true));
-        reimbursementDataList.Add(new ReimbursementDataClass("user", "boat", 14.1, false, true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "plane", 1000.1, false, true));
-        reimbursementDataList.Add(new ReimbursementDataClass("admin", "space ship", 1000000, false, true));
-        //end of remove
+        List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
+        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass]";
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            int i = 0;
+                            while (reader.Read())
+                            {
+                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDouble(3), reader.GetBoolean(4), reader.GetBoolean(5)));
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            return reimbursementDataList;
+                        }
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+            return reimbursementDataList;
+        }
         return reimbursementDataList;
     }
 
@@ -75,11 +155,26 @@ public class RepoClass : IRepoClass
 
     public string NewUser(string username, string password)
     {
-        //TODO add new user to database and remove this
-        //if user is not already in the database
-        usersList.Add(new UserDataClass(username, password, "user"));
-        return "User created";
-
+        String sql = $"INSERT INTO [dbo].[UserDataClass]([UserName], [UserPassword], [UserRole]) VALUES('{username}', '{password}', 'user')";
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        return "User Created";
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+            return "User Name Taken";
+        }
     }
 
     public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)

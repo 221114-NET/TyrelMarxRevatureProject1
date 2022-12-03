@@ -6,28 +6,28 @@ namespace ModelProject1;
 
 public interface IUserDataClass
 {
-    string Username { get; set; }
-    string Password { get; set; }
-    string Role { get; set; }
+    string UserName { get; set; }
+    string UserPassword { get; set; }
+    string UserRole { get; set; }
 
 }
 
 public class UserDataClass : IUserDataClass
 {
-    public UserDataClass(string username, string password, string role)
+    public UserDataClass(string username, string userpassword, string userrole)
     {
-        this.Username = username;
-        this.Password = password;
-        this.Role = role;
+        this.UserName = username;
+        this.UserPassword = userpassword;
+        this.UserRole = userrole;
     }
     [JsonPropertyName("username")]
-    public string Username { get; set; }
+    public string UserName { get; set; }
     
     [JsonPropertyName("password")]
-    public string Password { get; set; }
+    public string UserPassword { get; set; }
 
     [JsonPropertyName("role")]
-    public string Role { get; set; }
+    public string UserRole { get; set; }
     
 
 }
