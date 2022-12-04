@@ -50,7 +50,7 @@ public class RepoClass : IRepoClass
                         {
                             while (reader.Read())
                             {
-                                return reader.GetString(2);
+                                return reader.GetString(3);
                             }
                         }
                         else
@@ -88,7 +88,7 @@ public class RepoClass : IRepoClass
                             int i = 0;
                             while (reader.Read())
                             {
-                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDouble(3), reader.GetBoolean(4), reader.GetBoolean(5)));
+                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(2), reader.GetDouble(3), reader.GetBoolean(4), reader.GetBoolean(5)));
                                 i++;
                             }
                         }
@@ -127,7 +127,7 @@ public class RepoClass : IRepoClass
                             int i = 0;
                             while (reader.Read())
                             {
-                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDouble(3), reader.GetBoolean(4), reader.GetBoolean(5)));
+                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(2), reader.GetDouble(3), reader.GetBoolean(4), reader.GetBoolean(5)));
                                 i++;
                             }
                         }
@@ -169,17 +169,7 @@ public class RepoClass : IRepoClass
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                return "Reimbursement Updated";
-                            }
-                        }
-                        else
-                        {
-                            return "Reimbursement Updat Failed";
-                        }
+                        return "Reimbursement Updated";
                     }
                 }
             }
@@ -217,7 +207,7 @@ public class RepoClass : IRepoClass
 
     public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
-        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserName], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = '{LogedInUserName}'), '{ticketType}', {reimbursementAmount}, 0, 1)";
+        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = '{LogedInUserName}'), '{ticketType}', {reimbursementAmount}, 0, 1)";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -227,17 +217,7 @@ public class RepoClass : IRepoClass
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                return "Reimbursement Requested";
-                            }
-                        }
-                        else
-                        {
-                            return "Reimbursement Request Failed";
-                        }
+                        return "Reimbursement Requested";
                     }
                 }
             }
