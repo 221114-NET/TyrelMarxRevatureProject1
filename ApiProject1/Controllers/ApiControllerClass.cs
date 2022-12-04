@@ -37,10 +37,10 @@ namespace ApiProject1.Controllers
         //testing Authorize
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
         [HttpPost("ReimbursementRequest")]
-        public ActionResult<ReimbursementDataClass> ReimbursementRequest(ReimbursementDataClass reimbursement)
+        public string ReimbursementRequest(string ticketType, double reimbursementAmount)
         {
             string LogedInUserName = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            return Created("Request Created ", _businessClass.ReimbursementRequest(reimbursement, LogedInUserName));
+            return _businessClass.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
@@ -70,9 +70,9 @@ namespace ApiProject1.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         [HttpPost("ManagerUpdateReimbursement")]
-        public ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement)
+        public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
         {
-            return _businessClass.ManagerUpdateReimbursement(reimbursement);
+            return _businessClass.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
         }
     }
 }

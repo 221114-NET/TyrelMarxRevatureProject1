@@ -18,9 +18,9 @@ public interface IRepoClass
     string AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
-    ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement);
+    string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved);
     string NewUser(string username, string password);
-    ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement);
+    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
     List<ReimbursementDataClass> UpdateUserInformation(string currentUser);
 }
 
@@ -111,7 +111,7 @@ public class RepoClass : IRepoClass
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
         List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass]";
+        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE ReimbursementPendingStatus = 1";
 
         try
         {
@@ -147,10 +147,40 @@ public class RepoClass : IRepoClass
         return reimbursementDataList;
     }
 
-    public ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement)
+    public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
     {
-        //TODO tell the database to update the reimbursement if pendingStatus = true else throw error
-        throw new NotImplementedException();
+        ReimbursementDataClass reimbursement = new ReimbursementDataClass();
+        //TODO test this pending stats is not updating corectly prolly did the sql query wrong
+        string sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = {reimbursementApproved}, ReimbursementPendingStatus = 0 WHERE ReimbursementID = {reimbursementID} and ReimbursementPendingStatus = 1";
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                return "Reimbursement Updated";
+                            }
+                        }
+                        else
+                        {
+                            return "Reimbursement Updat Failed";
+                        }
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        return "Reimbursement Updat Failed";
     }
 
     public string NewUser(string username, string password)
@@ -177,13 +207,38 @@ public class RepoClass : IRepoClass
         }
     }
 
-    public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement)
+    public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
-        //TODO put reimbursement request into database
-        //get data from database and return it
-        //if the reimbursementDataList is empty return empty list
-
-        throw new NotImplementedException();
+        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserName], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES('{LogedInUserName}', '{ticketType}', {reimbursementAmount}, 0, 1)";
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                return "Reimbursement Requested";
+                            }
+                        }
+                        else
+                        {
+                            return "Reimbursement Request Failed";
+                        }
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        return "Reimbursement Request Failed";
     }
 
     public List<ReimbursementDataClass> UpdateUserInformation(string currentUser)

@@ -14,9 +14,9 @@ public interface IBusinessLayerClass
     string AuthUserLogin(string username, string password);
     List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
     List<ReimbursementDataClass> ManagerGetAllReimbursements();
-    ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement);
+    string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved);
     string NewUser(string username, string password);
-    ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement, string LogedInUserName);
+    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
     List<ReimbursementDataClass> UpdateUserInformation(string currentUser);
 }
 
@@ -88,9 +88,9 @@ public class BusinessLayerClass : IBusinessLayerClass
         return _repoClass.ManagerGetAllReimbursements();
     }
 
-    public ReimbursementDataClass ManagerUpdateReimbursement(ReimbursementDataClass reimbursement)
+    public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
     {
-        return _repoClass.ManagerUpdateReimbursement(reimbursement);
+        return _repoClass.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
     }
 
     public string NewUser(string username, string password)
@@ -111,11 +111,9 @@ public class BusinessLayerClass : IBusinessLayerClass
         }
     }
 
-    public ReimbursementDataClass ReimbursementRequest(ReimbursementDataClass reimbursement, string LogedInUserName)
+    public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
-        reimbursement.UserName = LogedInUserName;
-        reimbursement.ReimbursementApproved = false;
-        return _repoClass.ReimbursementRequest(reimbursement);
+        return _repoClass.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
     }
 
     public List<ReimbursementDataClass> UpdateUserInformation(string currentUser)

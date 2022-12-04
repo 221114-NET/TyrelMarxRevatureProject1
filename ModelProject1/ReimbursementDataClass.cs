@@ -27,7 +27,7 @@ namespace ModelProject1
         [JsonPropertyName("tickettype")]
         public string? ReimbursementType { get; set; }
 
-        [JsonPropertyName("reimbursementammount")]
+        [JsonPropertyName("reimbursementamount")]
         public double ReimbursementAmount { get; set; }
 
         [JsonPropertyName("approvedorrejected")]
@@ -39,19 +39,19 @@ namespace ModelProject1
         public ReimbursementDataClass()
         {
         }
-        public ReimbursementDataClass(string? ticketType, double reimbursementAmmount, bool approved, bool pendingStatus)
+        public ReimbursementDataClass(string? ticketType, double reimbursementAmount, bool approved, bool pendingStatus)
         {
             this.ReimbursementType = ticketType;
-            this.ReimbursementAmount = reimbursementAmmount;
+            this.ReimbursementAmount = reimbursementAmount;
             this.ReimbursementApproved = approved;
             this.ReimbursementPendingStatus = pendingStatus;
         }
-        public ReimbursementDataClass(int reimbursementID,string? userName, string? ticketType, double reimbursementAmmount, bool approved, bool pendingStatus)
+        public ReimbursementDataClass(int reimbursementID,string? userName, string? ticketType, double reimbursementAmount, bool approved, bool pendingStatus)
         {
             this.ReimbursementID = reimbursementID;
             this.UserName = userName;
             this.ReimbursementType = ticketType;
-            this.ReimbursementAmount = reimbursementAmmount;
+            this.ReimbursementAmount = reimbursementAmount;
             this.ReimbursementApproved = approved;
             this.ReimbursementPendingStatus = pendingStatus;
         }
