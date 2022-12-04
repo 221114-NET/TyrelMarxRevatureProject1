@@ -17,7 +17,7 @@ public interface IBusinessLayerClass
     string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved);
     string NewUser(string username, string password);
     string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
-    List<ReimbursementDataClass> UpdateUserInformation(string currentUser);
+    string UpdateUserInformation(string newUserName, string newUserPass, string currentUser);
 }
 
 public class BusinessLayerClass : IBusinessLayerClass
@@ -116,9 +116,9 @@ public class BusinessLayerClass : IBusinessLayerClass
         return _repoClass.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
     }
 
-    public List<ReimbursementDataClass> UpdateUserInformation(string currentUser)
+    public string UpdateUserInformation(string newUserName, string newUserPass, string currentUser)
     {
-        return _repoClass.UpdateUserInformation(currentUser);
+        return _repoClass.UpdateUserInformation(newUserName, newUserPass, currentUser);
     }
 }
 

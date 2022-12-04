@@ -2,11 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ModelProject1;
 using BusinessProject1;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ApiProject1.Controllers
@@ -34,7 +30,6 @@ namespace ApiProject1.Controllers
             return _businessClass.AuthUserLogin(username, password);
         }
 
-        //testing Authorize
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
         [HttpPost("ReimbursementRequest")]
         public string ReimbursementRequest(string ticketType, double reimbursementAmount)
@@ -53,11 +48,10 @@ namespace ApiProject1.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
         [HttpPost("UpdateUserInformation")]
-        public List<ReimbursementDataClass> UpdateUserInformation()
+        public string UpdateUserInformation(string newUserName, string newUserPass)
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            List<ReimbursementDataClass> result = _businessClass.UpdateUserInformation(currentUser);
-            return result;
+            return _businessClass.UpdateUserInformation(newUserName, newUserPass, currentUser);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]

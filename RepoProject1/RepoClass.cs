@@ -21,7 +21,7 @@ public interface IRepoClass
     string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved);
     string NewUser(string username, string password);
     string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
-    List<ReimbursementDataClass> UpdateUserInformation(string currentUser);
+    string UpdateUserInformation(string newUserName, string newUserPass, string currentUser);
 }
 
 public class RepoClass : IRepoClass
@@ -72,7 +72,7 @@ public class RepoClass : IRepoClass
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
         List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserName = '{currentUser}'";
+        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = '{currentUser}')";
 
         try
         {
@@ -151,7 +151,15 @@ public class RepoClass : IRepoClass
     {
         ReimbursementDataClass reimbursement = new ReimbursementDataClass();
         //TODO test this pending stats is not updating corectly prolly did the sql query wrong
-        string sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = {reimbursementApproved}, ReimbursementPendingStatus = 0 WHERE ReimbursementID = {reimbursementID} and ReimbursementPendingStatus = 1";
+        string sql;
+        if (reimbursementApproved)
+        {
+            sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = 1, ReimbursementPendingStatus = 0 WHERE ReimbursementID = {reimbursementID} and ReimbursementPendingStatus = 1";
+        }
+        else
+        {
+            sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = 0, ReimbursementPendingStatus = 0 WHERE ReimbursementID = {reimbursementID} and ReimbursementPendingStatus = 1";
+        }
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -209,7 +217,7 @@ public class RepoClass : IRepoClass
 
     public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
-        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserName], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES('{LogedInUserName}', '{ticketType}', {reimbursementAmount}, 0, 1)";
+        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserName], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = '{LogedInUserName}'), '{ticketType}', {reimbursementAmount}, 0, 1)";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -241,9 +249,27 @@ public class RepoClass : IRepoClass
         return "Reimbursement Request Failed";
     }
 
-    public List<ReimbursementDataClass> UpdateUserInformation(string currentUser)
+    public string UpdateUserInformation(string newUserName, string newUserPass, string currentUser)
     {
-        //TODO pull current user information from database and make sure current user is the one updating the information then update user information
-        throw new NotImplementedException();
+        string sql = $"UPDATE [dbo].[UserDataClass] SET UserName = '{newUserName}', UserPassword = '{newUserPass}' WHERE Username = '{currentUser}'";
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        return "User Information Updated";
+                    }
+                }
+            }
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.ToString());
+            return "User Information Update Failed";
+        }
     }
 }
