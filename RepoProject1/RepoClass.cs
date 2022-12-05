@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using ModelProject1;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Microsoft.Extensions.Configuration;
 
 
 namespace RepoProject1;
@@ -26,13 +27,7 @@ public interface IRepoClass
 
 public class RepoClass : IRepoClass
 {
-    // //FIXME temp storage for user data when database is added remove this
-    // List<UserDataClass> usersList = new List<UserDataClass>();
-    // List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-    // List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
-    // //end of temp storage
-    string AzureConnectionString = "Server=tcp:revdbo.database.windows.net,1433;Initial Catalog=RevP1;Persist Security Info=False;User ID=tyrel;Password=password1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
+    string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
 
     public string AuthUserLogin(string username, string password)
     {
@@ -150,7 +145,6 @@ public class RepoClass : IRepoClass
     public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
     {
         ReimbursementDataClass reimbursement = new ReimbursementDataClass();
-        //TODO test this pending stats is not updating corectly prolly did the sql query wrong
         string sql;
         if (reimbursementApproved)
         {

@@ -22,11 +22,6 @@ public interface IBusinessLayerClass
 
 public class BusinessLayerClass : IBusinessLayerClass
 {
-    //FIXME temp storage for user data when database is added remove this
-    List<UserDataClass> usersList = new List<UserDataClass>();
-    List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-    List<ReimbursementDataClass> reimbursementDataList2 = new List<ReimbursementDataClass>();
-    //end of temp storage
     private readonly IRepoClass _repoClass;
 
     public BusinessLayerClass(IRepoClass irepoClass)
@@ -36,15 +31,6 @@ public class BusinessLayerClass : IBusinessLayerClass
 
     public string AuthUserLogin(string username, string password)
     {
-        //FIXME temp storage for user data when database is added remove this
-        //check if repo has users/password return true or false
-        //_repoClass.AuthUserLogin(username, password)
-        // if (!usersList.Exists(x => x.UserName == "admin" && x.UserPassword == "admin"))
-        // {
-        //     usersList.Add(new UserDataClass("Admin", "Admin", "admin"));
-        //     usersList.Add(new UserDataClass("user", "user", "user"));
-        // }
-        //end temp storage
         string result = _repoClass.AuthUserLogin(username, password);
         if (!result.Equals("false"))
         {
