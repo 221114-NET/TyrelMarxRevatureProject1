@@ -31,7 +31,7 @@ public class RepoClass : IRepoClass
 
     public string AuthUserLogin(string username, string password)
     {
-        String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = '{username}' and UserPassword = '{password}'";
+        String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = @username and UserPassword = @password";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -39,6 +39,8 @@ public class RepoClass : IRepoClass
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@password", password);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -67,7 +69,7 @@ public class RepoClass : IRepoClass
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
         List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = '{currentUser}')";
+        String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @currentUser)";
 
         try
         {
@@ -76,6 +78,7 @@ public class RepoClass : IRepoClass
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@currentUser", currentUser);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -148,11 +151,11 @@ public class RepoClass : IRepoClass
         string sql;
         if (reimbursementApproved)
         {
-            sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = 1, ReimbursementPendingStatus = 0 WHERE ReimbursementID = {reimbursementID} and ReimbursementPendingStatus = 1";
+            sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = 1, ReimbursementPendingStatus = 0 WHERE ReimbursementID = @reimbursementID and ReimbursementPendingStatus = 1";
         }
         else
         {
-            sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = 0, ReimbursementPendingStatus = 0 WHERE ReimbursementID = {reimbursementID} and ReimbursementPendingStatus = 1";
+            sql = $"UPDATE [dbo].[ReimbursementDataClass] SET ReimbursementApproved = 0, ReimbursementPendingStatus = 0 WHERE ReimbursementID = @reimbursementID and ReimbursementPendingStatus = 1";
         }
         try
         {
@@ -161,6 +164,7 @@ public class RepoClass : IRepoClass
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@reimbursementID", reimbursementID);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         return "Reimbursement Updated";
@@ -177,7 +181,7 @@ public class RepoClass : IRepoClass
 
     public string NewUser(string username, string password)
     {
-        String sql = $"INSERT INTO [dbo].[UserDataClass]([UserName], [UserPassword], [UserRole]) VALUES('{username}', '{password}', 'user')";
+        String sql = $"INSERT INTO [dbo].[UserDataClass]([UserName], [UserPassword], [UserRole]) VALUES(@username, @password, 'user')";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -185,6 +189,8 @@ public class RepoClass : IRepoClass
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@password", password);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         return "User Created";
@@ -201,7 +207,7 @@ public class RepoClass : IRepoClass
 
     public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
-        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = '{LogedInUserName}'), '{ticketType}', {reimbursementAmount}, 0, 1)";
+        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, 0, 1)";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -209,6 +215,9 @@ public class RepoClass : IRepoClass
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@ticketType", ticketType);
+                    command.Parameters.AddWithValue("@reimbursementAmount", reimbursementAmount);
+                    command.Parameters.AddWithValue("@LogedInUserName", LogedInUserName);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         return "Reimbursement Requested";
@@ -225,7 +234,7 @@ public class RepoClass : IRepoClass
 
     public string UpdateUserInformation(string newUserName, string newUserPass, string currentUser)
     {
-        string sql = $"UPDATE [dbo].[UserDataClass] SET UserName = '{newUserName}', UserPassword = '{newUserPass}' WHERE Username = '{currentUser}'";
+        string sql = $"UPDATE [dbo].[UserDataClass] SET UserName = @newUserName, UserPassword = @newUserPass WHERE Username = @currentUser";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -233,6 +242,9 @@ public class RepoClass : IRepoClass
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@newUserName", newUserName);
+                    command.Parameters.AddWithValue("@newUserPass", newUserPass);
+                    command.Parameters.AddWithValue("@currentUser", currentUser);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         return "User Information Updated";
