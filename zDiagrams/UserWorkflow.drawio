@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="myox_wIYIGJzvfS4QjIp" name="Page-1">
-        <mxGraphModel dx="1630" dy="565" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1715" dy="726" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -30,8 +30,8 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-33" value="Login" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="180" y="120" width="120" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-37" value="return Logged in to user and open api for reimbursement and return default employee role" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="90" y="640" width="120" height="80" as="geometry"/>
+                <mxCell id="U25JDylt9elMhkWphfTc-37" value="return token for login" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="630" width="120" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-43" target="U25JDylt9elMhkWphfTc-45" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -42,7 +42,7 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-45" target="U25JDylt9elMhkWphfTc-51" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-45" value="Verify email and password dont have special charictars" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="U25JDylt9elMhkWphfTc-45" value="Verify email and password follow correct formating" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="180" y="225" width="120" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-51" target="U25JDylt9elMhkWphfTc-67" edge="1">
@@ -51,30 +51,27 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-51" value="Send Validated data repoLayer / database" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="180" y="320" width="120" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-106" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-53" edge="1">
+                <mxCell id="4" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="U25JDylt9elMhkWphfTc-53" target="U25JDylt9elMhkWphfTc-102">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=none;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="U25JDylt9elMhkWphfTc-53" target="U25JDylt9elMhkWphfTc-45">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="180" y="318" as="targetPoint"/>
+                        <mxPoint x="180" y="310" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="160" y="310"/>
+                        </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-53" value="Run tests on Validation" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-160" y="280" width="60" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-56" target="U25JDylt9elMhkWphfTc-58" edge="1">
+                <mxCell id="2" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="U25JDylt9elMhkWphfTc-56" target="U25JDylt9elMhkWphfTc-69">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-56" value="send reimbursement&lt;br&gt;to api&lt;br&gt;with a Type, Dollar Amount" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="320" y="160" width="120" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-58" target="U25JDylt9elMhkWphfTc-69" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-58" value="validate that data is a string with no special char" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="320" y="240" width="120" height="50" as="geometry"/>
-                </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-67" target="U25JDylt9elMhkWphfTc-79" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-67" target="U25JDylt9elMhkWphfTc-81" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-67" value="Verify unique email in db" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -83,8 +80,8 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-69" target="U25JDylt9elMhkWphfTc-71" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-69" value="Send Validated data repoLayer / database" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="320" y="320" width="120" height="65" as="geometry"/>
+                <mxCell id="U25JDylt9elMhkWphfTc-69" value="send data to repoLayer / database" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="270" width="120" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-71" target="U25JDylt9elMhkWphfTc-73" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -92,7 +89,7 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-71" value="set default status to pending" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="320" y="410" width="120" height="65" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-73" value="enter the ticket to the database.&lt;br&gt;Return the pending tickets for the user from the database" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="U25JDylt9elMhkWphfTc-73" value="enter the ticket into the database." style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="320" y="518" width="120" height="82" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-75" target="U25JDylt9elMhkWphfTc-33" edge="1">
@@ -113,17 +110,8 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-79" target="U25JDylt9elMhkWphfTc-37" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-79" value="User" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="130" y="526.5" width="60" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-81" target="U25JDylt9elMhkWphfTc-84" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-81" value="Manager" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="210" y="526.5" width="80" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-84" value="return Logged in to user and open api for pending ticket status&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="230" y="640" width="120" height="80" as="geometry"/>
+                <mxCell id="U25JDylt9elMhkWphfTc-79" value="User/&lt;br&gt;Manager" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="518" width="60" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-86" target="U25JDylt9elMhkWphfTc-88" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -143,7 +131,7 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-95" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-92" target="U25JDylt9elMhkWphfTc-94" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-92" value="in buisness&lt;br&gt;filter by pending approved or denied" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="U25JDylt9elMhkWphfTc-92" value="filter by pending approved or denied" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="690" y="280" width="120" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-97" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-94" target="U25JDylt9elMhkWphfTc-96" edge="1">
@@ -166,7 +154,7 @@
                 <mxCell id="U25JDylt9elMhkWphfTc-104" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="U25JDylt9elMhkWphfTc-102" target="U25JDylt9elMhkWphfTc-103" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="U25JDylt9elMhkWphfTc-102" value="Verify email and password dont have special charictars" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="U25JDylt9elMhkWphfTc-102" value="Verify email and password follow correct formating" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="30" y="232.5" width="120" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="U25JDylt9elMhkWphfTc-108" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="U25JDylt9elMhkWphfTc-103" target="U25JDylt9elMhkWphfTc-107" edge="1">
