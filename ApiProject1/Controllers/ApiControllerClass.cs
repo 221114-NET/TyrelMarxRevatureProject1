@@ -24,7 +24,7 @@ namespace ApiProject1.Controllers
             return _businessClass.NewUser(username, password);
         }
 
-        [HttpPost("AuthUserLogin")]
+        [HttpPost("UserLogin")]
         public string AuthUserLogin(string username, string password)
         {
             return _businessClass.AuthUserLogin(username, password);
@@ -39,7 +39,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
-        [HttpGet("GetUserReimbursements")]
+        [HttpGet("UserReimbursements")]
         public List<ReimbursementDataClass> GetUserReimbursements()
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
@@ -47,7 +47,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
-        [HttpPost("UpdateUserInformation")]
+        [HttpPost("UserInformation")]
         public string UpdateUserInformation(string newUserName, string newUserPass)
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
@@ -55,7 +55,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-        [HttpGet("ManagerGetAllReimbursements")]
+        [HttpGet("ManagerReimbursements")]
         public List<ReimbursementDataClass> ManagerGetAllReimbursements()
         {
             List<ReimbursementDataClass> result = _businessClass.ManagerGetAllReimbursements();
@@ -63,7 +63,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-        [HttpPost("ManagerUpdateReimbursement")]
+        [HttpPost("ManagerReimbursement")]
         public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
         {
             return _businessClass.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
