@@ -8,7 +8,7 @@ using RepoProject1;
 
 public class UnitTest1
 {
-    internal class testRepo : IRepoClass
+    internal class testRepo : IRepoClass, IRepoClassAuthUserLogin
     {
         public string AuthUserLogin(string username, string password)
         {
@@ -54,7 +54,7 @@ public class UnitTest1
     public void CreateNewUserTestInvalid(string value1, string value2)
     {
         System.Console.WriteLine(value1, value2);
-        BusinessLayerClass test = new BusinessLayerClass(new testRepo());
+        BusinessLayerClass test = new BusinessLayerClass(new testRepo(), new testRepo());
         var result = test.NewUser(value1, value2);
         Assert.Contains("Invalid email or password", result);
     }
@@ -66,7 +66,7 @@ public class UnitTest1
     public void CreateNewUserTestValid(string value1, string value2)
     {
         System.Console.WriteLine(value1, value2);
-        BusinessLayerClass test = new BusinessLayerClass(new testRepo());
+        BusinessLayerClass test = new BusinessLayerClass(new testRepo(), new testRepo());
         var result = test.NewUser(value1, value2);
         Assert.Contains("Login Successful", result);
     }
@@ -77,7 +77,7 @@ public class UnitTest1
     [InlineData("user", "user")]
     public void AuthUserLoinTestValid(string value1, string value2)
     {
-        BusinessLayerClass test = new BusinessLayerClass(new RepoClass());
+        BusinessLayerClass test = new BusinessLayerClass(new testRepo(), new testRepo());
         var result = test.AuthUserLogin(value1, value2);
         Assert.DoesNotContain("User not found", result);
     }
@@ -90,7 +90,7 @@ public class UnitTest1
 
     public void AuthUserLoinTestInvalid(string value1, string value2)
     {
-        BusinessLayerClass test = new BusinessLayerClass(new RepoClass());
+        BusinessLayerClass test = new BusinessLayerClass(new testRepo(), new testRepo());
         var result = test.AuthUserLogin(value1, value2);
         Assert.Contains("User not found", result);
     }

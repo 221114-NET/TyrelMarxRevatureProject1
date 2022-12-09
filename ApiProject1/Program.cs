@@ -72,7 +72,15 @@ builder.Services.AddAuthorization();
 
         #endregion
         builder.Services.AddScoped<IBusinessLayerClass, BusinessLayerClass>();
-        builder.Services.AddScoped<IRepoClass, RepoClass>();
+
+        builder.Services.AddScoped<IRepoClassAuthUserLogin, RepoClass>();
+        builder.Services.AddScoped<IRepoClassGetUserReimbursements, RepoClass>();
+        builder.Services.AddScoped<IRepoClassManagerGetAllReimbursements, RepoClass>();
+        builder.Services.AddScoped<IRepoClassManagerUpdateReimbursement, RepoClass>();
+        builder.Services.AddScoped<IRepoClassNewUser, RepoClass>();
+        builder.Services.AddScoped<IRepoClassReimbursementRequest, RepoClass>();
+        builder.Services.AddScoped<IRepoClassUpdateUserInformation, RepoClass>();
+
         //builder.Services.AddScoped< , >;
         
         var app = builder.Build();

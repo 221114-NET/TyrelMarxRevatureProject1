@@ -10,16 +10,38 @@ namespace BusinessProject1;
 
 public class BusinessLayerClass : IBusinessLayerClass
 {
-    private readonly IRepoClass _repoClass;
+    private readonly IRepoClassAuthUserLogin _IRepoClassAuthUserLogin;
+    private readonly IRepoClassGetUserReimbursements _IRepoClassGetUserReimbursements;
+    private readonly IRepoClassManagerGetAllReimbursements _IRepoClassManagerGetAllReimbursements;
+    private readonly IRepoClassManagerUpdateReimbursement _IRepoClassManagerUpdateReimbursement;
+    private readonly IRepoClassNewUser _IRepoClassNewUser;
+    private readonly IRepoClassReimbursementRequest _IRepoClassReimbursementRequest;
+    private readonly IRepoClassUpdateUserInformation _IRepoClassUpdateUserInformation;
 
-    public BusinessLayerClass(IRepoClass irepoClass)
+
+    public BusinessLayerClass(
+        IRepoClassAuthUserLogin irepoClassAuthUserLogin,
+        IRepoClassGetUserReimbursements irepoClassGetUserReimbursements,
+        IRepoClassManagerGetAllReimbursements irepoClassManagerGetAllReimbursements,
+        IRepoClassManagerUpdateReimbursement irepoClassManagerUpdateReimbursement,
+        IRepoClassNewUser irepoClassNewUser,
+        IRepoClassReimbursementRequest irepoClassReimbursementRequest,
+        IRepoClassUpdateUserInformation irepoClassUpdateUserInformation
+        )
     {
-        _repoClass = irepoClass;
+        
+        _IRepoClassAuthUserLogin = irepoClassAuthUserLogin;
+        _IRepoClassGetUserReimbursements = irepoClassGetUserReimbursements;
+        _IRepoClassManagerGetAllReimbursements = irepoClassManagerGetAllReimbursements;
+        _IRepoClassManagerUpdateReimbursement = irepoClassManagerUpdateReimbursement;
+        _IRepoClassNewUser = irepoClassNewUser;
+        _IRepoClassReimbursementRequest = irepoClassReimbursementRequest;
+        _IRepoClassUpdateUserInformation = irepoClassUpdateUserInformation;
     }
 
     public string AuthUserLogin(string username, string password)
     {
-        string result = _repoClass.AuthUserLogin(username, password);
+        string result = _IRepoClassAuthUserLogin.AuthUserLogin(username, password);
         if (!result.Equals("false"))
         {
             #region Authentication
@@ -53,17 +75,17 @@ public class BusinessLayerClass : IBusinessLayerClass
 
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
-        return _repoClass.GetUserReimbursements(currentUser);
+        return _IRepoClassGetUserReimbursements.GetUserReimbursements(currentUser);
     }
 
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
-        return _repoClass.ManagerGetAllReimbursements();
+        return _IRepoClassManagerGetAllReimbursements.ManagerGetAllReimbursements();
     }
 
     public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
     {
-        return _repoClass.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
+        return _IRepoClassManagerUpdateReimbursement.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
     }
 
     public string NewUser(string username, string password)
@@ -75,7 +97,7 @@ public class BusinessLayerClass : IBusinessLayerClass
         Regex re = new Regex(strRegex);
         if (re.IsMatch(username) && password.Length > 1 && password != null)
         {
-            return _repoClass.NewUser(username, password);
+            return _IRepoClassNewUser.NewUser(username, password);
         }
         else
         {
@@ -86,7 +108,7 @@ public class BusinessLayerClass : IBusinessLayerClass
 
     public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
-        return _repoClass.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
+        return _IRepoClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
     }
 
     public string UpdateUserInformation(string newUserName, string newUserPass, string currentUser)
@@ -98,7 +120,7 @@ public class BusinessLayerClass : IBusinessLayerClass
         Regex re = new Regex(strRegex);
         if (re.IsMatch(newUserName) && newUserPass.Length > 1 && newUserPass != null)
         {
-            return _repoClass.UpdateUserInformation(newUserName, newUserPass, currentUser);
+            return _IRepoClassUpdateUserInformation.UpdateUserInformation(newUserName, newUserPass, currentUser);
         }
         else
         {

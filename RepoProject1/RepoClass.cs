@@ -1,14 +1,16 @@
 ﻿using Microsoft.Data.SqlClient;
 using ModelProject1;
 using Microsoft.Extensions.Configuration;
-
+using System.Collections.Generic;
+using System;
 
 namespace RepoProject1;
 
-public class RepoClass : IRepoClass
+public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursements,
+ IRepoClassManagerGetAllReimbursements, IRepoClassManagerUpdateReimbursement,
+  IRepoClassNewUser, IRepoClassReimbursementRequest, IRepoClassUpdateUserInformation
 {
     string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
-
     
     public string AuthUserLogin(string username, string password)
     {
