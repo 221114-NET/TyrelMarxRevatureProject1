@@ -73,13 +73,13 @@ builder.Services.AddAuthorization();
         #endregion
         builder.Services.AddScoped<IBusinessLayerClass, BusinessLayerClass>();
 
-        builder.Services.AddScoped<IRepoClassAuthUserLogin, RepoClass>();
-        builder.Services.AddScoped<IRepoClassGetUserReimbursements, RepoClass>();
-        builder.Services.AddScoped<IRepoClassManagerGetAllReimbursements, RepoClass>();
-        builder.Services.AddScoped<IRepoClassManagerUpdateReimbursement, RepoClass>();
-        builder.Services.AddScoped<IRepoClassNewUser, RepoClass>();
-        builder.Services.AddScoped<IRepoClassReimbursementRequest, RepoClass>();
-        builder.Services.AddScoped<IRepoClassUpdateUserInformation, RepoClass>();
+        builder.Services.AddScoped<IRepoClassAuthUserLogin, RepoClassAuthUserLogin>();
+        builder.Services.AddScoped<IRepoClassGetUserReimbursements, RepoClassGetUserReimbursements>();
+        builder.Services.AddScoped<IRepoClassManagerGetAllReimbursements, RepoClassManagerGetAllReimbursements>();
+        builder.Services.AddScoped<IRepoClassManagerUpdateReimbursement, RepoClassManagerUpdateReimbursement>();
+        builder.Services.AddScoped<IRepoClassNewUser, RepoClassNewUser>();
+        builder.Services.AddScoped<IRepoClassReimbursementRequest, RepoClassReimbursementRequest>();
+        builder.Services.AddScoped<IRepoClassUpdateUserInformation, RepoClassUpdateUserInformation>();
 
         //builder.Services.AddScoped< , >;
         

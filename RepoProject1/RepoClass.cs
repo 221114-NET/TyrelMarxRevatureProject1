@@ -6,12 +6,11 @@ using System;
 
 namespace RepoProject1;
 
-public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursements,
- IRepoClassManagerGetAllReimbursements, IRepoClassManagerUpdateReimbursement,
-  IRepoClassNewUser, IRepoClassReimbursementRequest, IRepoClassUpdateUserInformation
+public class RepoClass
 {
     string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
     
+    //deprecated
     public string AuthUserLogin(string username, string password)
     {
         String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = @username and UserPassword = @password";
@@ -48,7 +47,8 @@ public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursement
         }
         return "false";
     }
-
+    
+    //deprecated
     public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
     {
         List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
@@ -88,7 +88,8 @@ public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursement
         }
         return reimbursementDataList;
     }
-
+    
+    //deprecated
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {
         List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
@@ -128,6 +129,7 @@ public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursement
         return reimbursementDataList;
     }
 
+    //deprecated
     public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
     {
         ReimbursementDataClass reimbursement = new ReimbursementDataClass();
@@ -161,7 +163,8 @@ public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursement
         }
         return "Reimbursement Updat Failed";
     }
-
+    
+    //deprecated
     public string NewUser(string username, string password)
     {
         String sql = $"INSERT INTO [dbo].[UserDataClass]([UserName], [UserPassword], [UserRole]) VALUES(@username, @password, 'user')";
@@ -188,6 +191,7 @@ public class RepoClass : IRepoClassAuthUserLogin, IRepoClassGetUserReimbursement
         }
     }
 
+    //deprecated
     public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
     {
         string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, 0, 1)";
