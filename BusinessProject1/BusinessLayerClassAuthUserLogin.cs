@@ -10,11 +10,11 @@ using RepoProject1;
 
 namespace BusinessProject1
 {
-    public class BusinessClassAuthUserLogin : IBusinessLayerClassAuthUserLogin
+    public class BusinessLayerClassAuthUserLogin : IBusinessLayerClassAuthUserLogin
     {
         private readonly IRepoClassAuthUserLogin _IRepoClassAuthUserLogin;
 
-        public BusinessClassAuthUserLogin(IRepoClassAuthUserLogin irepoClassAuthUserLogin)
+        public BusinessLayerClassAuthUserLogin(IRepoClassAuthUserLogin irepoClassAuthUserLogin)
         {
             _IRepoClassAuthUserLogin = irepoClassAuthUserLogin;
         }

@@ -72,8 +72,8 @@ builder.Services.AddAuthorization();
 
         #endregion
 
-        builder.Services.AddScoped<IBusinessLayerClassAuthUserLogin, BusinessClassAuthUserLogin>();
-        builder.Services.AddScoped<IBusinessLayerClassGetUserReimbursements, BusinessClassGetUserReimbursements>();
+        builder.Services.AddScoped<IBusinessLayerClassAuthUserLogin, BusinessLayerClassAuthUserLogin>();
+        builder.Services.AddScoped<IBusinessLayerClassGetUserReimbursements, BusinessLayerClassGetUserReimbursements>();
         builder.Services.AddScoped<IBusinessLayerClassManagerGetAllReimbursements, BusinessLayerClassManagerGetAllReimbursements>();
         builder.Services.AddScoped<IBusinessLayerClassManagerUpdateReimbursement, BusinessLayerClassManagerUpdateReimbursement>();
         builder.Services.AddScoped<IBusinessLayerClassNewUser, BusinessLayerClassNewUser>();

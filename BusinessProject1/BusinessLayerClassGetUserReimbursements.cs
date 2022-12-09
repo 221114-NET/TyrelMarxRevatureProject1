@@ -7,11 +7,11 @@ using RepoProject1;
 
 namespace BusinessProject1
 {
-    public class BusinessClassGetUserReimbursements : IBusinessLayerClassGetUserReimbursements
+    public class BusinessLayerClassGetUserReimbursements : IBusinessLayerClassGetUserReimbursements
     {
         private readonly IRepoClassGetUserReimbursements _IRepoClassGetUserReimbursements;
 
-        public BusinessClassGetUserReimbursements(IRepoClassGetUserReimbursements irepoClassGetUserReimbursements)
+        public BusinessLayerClassGetUserReimbursements(IRepoClassGetUserReimbursements irepoClassGetUserReimbursements)
         {
             _IRepoClassGetUserReimbursements = irepoClassGetUserReimbursements;
         }
