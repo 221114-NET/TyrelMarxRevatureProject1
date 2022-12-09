@@ -11,23 +11,36 @@ namespace ApiProject1.Controllers
     [Route("api/[controller]")]
     public class ApiControllerClass : ControllerBase
     {
-        private readonly IBusinessLayerClass _businessClass;
-        public ApiControllerClass(IBusinessLayerClass businessClass)
+        private readonly IBusinessLayerClassAuthUserLogin _iBusinessLayerClassAuthUserLogin;
+        private readonly IBusinessLayerClassGetUserReimbursements _iBusinessLayerClassGetUserReimbursements;
+        private readonly IBusinessLayerClassManagerGetAllReimbursements _iBusinessLayerClassManagerGetAllReimbursements;
+        private readonly IBusinessLayerClassManagerUpdateReimbursement _iBusinessLayerClassManagerUpdateReimbursement;
+        private readonly IBusinessLayerClassNewUser _iBusinessLayerClassNewUser;
+        private readonly IBusinessLayerClassReimbursementRequest _iBusinessLayerClassReimbursementRequest;
+        private readonly IBusinessLayerClassUpdateUserInformation _iBusinessLayerClassUpdateUserInformation;
+
+        public ApiControllerClass(IBusinessLayerClassAuthUserLogin ibusinessLayerClassAuthUserLogin, IBusinessLayerClassGetUserReimbursements ibusinessLayerClassGetUserReimbursements, IBusinessLayerClassManagerGetAllReimbursements ibusinessLayerClassManagerGetAllReimbursements, IBusinessLayerClassManagerUpdateReimbursement ibusinessLayerClassManagerUpdateReimbursement, IBusinessLayerClassNewUser ibusinessLayerClassNewUser, IBusinessLayerClassReimbursementRequest ibusinessLayerClassReimbursementRequest, IBusinessLayerClassUpdateUserInformation ibusinessLayerClassUpdateUserInformation)
         {
-            _businessClass = businessClass;
+            _iBusinessLayerClassAuthUserLogin = ibusinessLayerClassAuthUserLogin;
+            _iBusinessLayerClassGetUserReimbursements = ibusinessLayerClassGetUserReimbursements;
+            _iBusinessLayerClassManagerGetAllReimbursements = ibusinessLayerClassManagerGetAllReimbursements;
+            _iBusinessLayerClassManagerUpdateReimbursement = ibusinessLayerClassManagerUpdateReimbursement;
+            _iBusinessLayerClassNewUser = ibusinessLayerClassNewUser;
+            _iBusinessLayerClassReimbursementRequest = ibusinessLayerClassReimbursementRequest;
+            _iBusinessLayerClassUpdateUserInformation = ibusinessLayerClassUpdateUserInformation;
         }
 
 
         [HttpPost("NewUser")]
         public string NewUser(string username, string password)
         {
-            return _businessClass.NewUser(username, password);
+            return _iBusinessLayerClassNewUser.NewUser(username, password);
         }
 
         [HttpPost("UserLogin")]
         public string AuthUserLogin(string username, string password)
         {
-            return _businessClass.AuthUserLogin(username, password);
+            return _iBusinessLayerClassAuthUserLogin.AuthUserLogin(username, password);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
@@ -35,7 +48,7 @@ namespace ApiProject1.Controllers
         public string ReimbursementRequest(string ticketType, double reimbursementAmount)
         {
             string LogedInUserName = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            return _businessClass.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
+            return _iBusinessLayerClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
@@ -43,7 +56,7 @@ namespace ApiProject1.Controllers
         public List<ReimbursementDataClass> GetUserReimbursements()
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            return _businessClass.GetUserReimbursements(currentUser);
+            return _iBusinessLayerClassGetUserReimbursements.GetUserReimbursements(currentUser);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
@@ -51,14 +64,14 @@ namespace ApiProject1.Controllers
         public string UpdateUserInformation(string newUserName, string newUserPass)
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            return _businessClass.UpdateUserInformation(newUserName, newUserPass, currentUser);
+            return _iBusinessLayerClassUpdateUserInformation.UpdateUserInformation(newUserName, newUserPass, currentUser);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         [HttpGet("ManagerReimbursements")]
         public List<ReimbursementDataClass> ManagerGetAllReimbursements()
         {
-            List<ReimbursementDataClass> result = _businessClass.ManagerGetAllReimbursements();
+            List<ReimbursementDataClass> result = _iBusinessLayerClassManagerGetAllReimbursements.ManagerGetAllReimbursements();
             return result;
         }
 
@@ -66,7 +79,7 @@ namespace ApiProject1.Controllers
         [HttpPost("ManagerReimbursement")]
         public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
         {
-            return _businessClass.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
+            return _iBusinessLayerClassManagerUpdateReimbursement.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
         }
     }
 }
