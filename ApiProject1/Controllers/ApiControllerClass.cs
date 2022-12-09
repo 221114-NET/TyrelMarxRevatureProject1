@@ -52,7 +52,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
-        [HttpGet("UserReimbursements")]
+        [HttpGet("MyReimbursements")]
         public List<ReimbursementDataClass> GetUserReimbursements()
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
@@ -60,7 +60,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
-        [HttpPost("UserInformation")]
+        [HttpPost("UpdateUserInformation")]
         public string UpdateUserInformation(string newUserName, string newUserPass)
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
@@ -68,7 +68,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-        [HttpGet("ManagerReimbursements")]
+        [HttpGet("ManagerPendingReimbursements")]
         public List<ReimbursementDataClass> ManagerGetAllReimbursements()
         {
             List<ReimbursementDataClass> result = _iBusinessLayerClassManagerGetAllReimbursements.ManagerGetAllReimbursements();
@@ -76,7 +76,7 @@ namespace ApiProject1.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-        [HttpPost("ManagerReimbursement")]
+        [HttpPost("ManagerUpdateReimbursement")]
         public string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved)
         {
             return _iBusinessLayerClassManagerUpdateReimbursement.ManagerUpdateReimbursement(reimbursementID, reimbursementApproved);
