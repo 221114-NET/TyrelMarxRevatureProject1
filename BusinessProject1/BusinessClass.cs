@@ -2,23 +2,11 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ModelProject1;
 using RepoProject1;
 
 namespace BusinessProject1;
-
-public interface IBusinessLayerClass
-{
-    string AuthUserLogin(string username, string password);
-    List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
-    List<ReimbursementDataClass> ManagerGetAllReimbursements();
-    string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved);
-    string NewUser(string username, string password);
-    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
-    string UpdateUserInformation(string newUserName, string newUserPass, string currentUser);
-}
 
 public class BusinessLayerClass : IBusinessLayerClass
 {
@@ -67,7 +55,6 @@ public class BusinessLayerClass : IBusinessLayerClass
     {
         return _repoClass.GetUserReimbursements(currentUser);
     }
-
 
     public List<ReimbursementDataClass> ManagerGetAllReimbursements()
     {

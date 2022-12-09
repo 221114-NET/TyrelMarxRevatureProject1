@@ -1,34 +1,15 @@
-﻿using System;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Data.SqlClient;
 using ModelProject1;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Microsoft.Extensions.Configuration;
 
 
 namespace RepoProject1;
 
-public interface IRepoClass
-{
-    string AuthUserLogin(string username, string password);
-    List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
-    List<ReimbursementDataClass> ManagerGetAllReimbursements();
-    string ManagerUpdateReimbursement(int reimbursementID, bool reimbursementApproved);
-    string NewUser(string username, string password);
-    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
-    string UpdateUserInformation(string newUserName, string newUserPass, string currentUser);
-}
-
 public class RepoClass : IRepoClass
 {
     string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
 
+    
     public string AuthUserLogin(string username, string password)
     {
         String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = @username and UserPassword = @password";
