@@ -7,44 +7,50 @@ using Microsoft.Extensions.Configuration;
 
 namespace RepoProject1
 {
-    public class RepoClassAuthUserLogin: IRepoClassAuthUserLogin
+    public class RepoClassAuthUserLogin : IRepoClassAuthUserLogin
     {
-        public string AuthUserLogin(string username, string password)
-    {
-        string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
-        String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = @username and UserPassword = @password";
-        try
+        private readonly ILoginLogger _loginLogger;
+        public RepoClassAuthUserLogin(ILoginLogger loginLogger)
         {
-            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            _loginLogger = loginLogger;
+        }
+        public string AuthUserLogin(string username, string password)
+        {
+            string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
+            String sql = $"SELECT * FROM [dbo].[UserDataClass]WHERE UserName = @username and UserPassword = @password";
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection(AzureConnectionString))
                 {
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        if (reader.HasRows)
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@password", password);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.HasRows)
                             {
-                                return reader.GetString(3);
+                                while (reader.Read())
+                                {
+                                    _loginLogger.LoginLog(username);
+                                    return reader.GetString(3);
+                                }
                             }
-                        }
-                        else
-                        {
-                            return "false";
+                            else
+                            {
+                                return "false";
+                            }
                         }
                     }
                 }
             }
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.ToString());
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+                return "false";
+            }
             return "false";
         }
-        return "false";
-    }
     }
 }

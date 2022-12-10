@@ -90,6 +90,8 @@ builder.Services.AddAuthorization();
         builder.Services.AddScoped<IRepoClassReimbursementRequest, RepoClassReimbursementRequest>();
         builder.Services.AddScoped<IRepoClassUpdateUserInformation, RepoClassUpdateUserInformation>();
 
+        builder.Services.AddScoped<ILoginLogger, LoginLogger>();
+
         //builder.Services.AddScoped< , >;
 
         //this makes enums show up as strings instead of numbers
