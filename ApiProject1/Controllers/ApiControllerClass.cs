@@ -53,10 +53,10 @@ namespace ApiProject1.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
         [HttpGet("MyReimbursements")]
-        public List<ReimbursementDataClass> GetUserReimbursements()
+        public List<ReimbursementDataClass> GetUserReimbursements(TicketFilter filter)
         {
             string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            return _iBusinessLayerClassGetUserReimbursements.GetUserReimbursements(currentUser);
+            return _iBusinessLayerClassGetUserReimbursements.GetUserReimbursements(currentUser, filter);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]

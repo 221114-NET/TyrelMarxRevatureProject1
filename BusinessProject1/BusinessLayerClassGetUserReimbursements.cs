@@ -15,9 +15,9 @@ namespace BusinessProject1
         {
             _IRepoClassGetUserReimbursements = irepoClassGetUserReimbursements;
         }
-        public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
+        public List<ReimbursementDataClass> GetUserReimbursements(string currentUser, TicketFilter filter)
         {
-            return _IRepoClassGetUserReimbursements.GetUserReimbursements(currentUser);
+            return _IRepoClassGetUserReimbursements.GetUserReimbursements(currentUser, filter);
         }
     }
 }

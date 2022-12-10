@@ -8,6 +8,6 @@ namespace RepoProject1
 {
     public interface IRepoClassGetUserReimbursements
     {
-    List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
+    List<ReimbursementDataClass> GetUserReimbursements(string currentUser, TicketFilter filter);
     }
 }

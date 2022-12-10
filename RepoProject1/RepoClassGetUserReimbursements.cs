@@ -10,12 +10,27 @@ namespace RepoProject1
 {
     public class RepoClassGetUserReimbursements : IRepoClassGetUserReimbursements
     {
-        public List<ReimbursementDataClass> GetUserReimbursements(string currentUser)
+        public List<ReimbursementDataClass> GetUserReimbursements(string currentUser, TicketFilter filter)
         {
             string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
-
+            string sql = "";
             List<ReimbursementDataClass> reimbursementDataList = new List<ReimbursementDataClass>();
-            String sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @currentUser)";
+            if (filter.ToString().Equals("All"))
+            {
+            sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @currentUser)";
+            }
+            else if (filter.ToString().Equals("Pending"))
+            {
+            sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @currentUser AND ReimbursementPendingStatus = 1)";
+            }
+            else if(filter.ToString().Equals("Approved"))
+            {
+            sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @currentUser AND ReimbursementApproved = 1)";
+            }
+            else if(filter.ToString().Equals("Denied"))
+            {
+            sql = $"SELECT * FROM [dbo].[ReimbursementDataClass] WHERE UserID = (SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @currentUser AND ReimbursementApproved = 0 AND ReimbursementPendingStatus = 0)";
+            }
 
             try
             {
@@ -25,6 +40,7 @@ namespace RepoProject1
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@currentUser", currentUser);
+                        command.Parameters.AddWithValue("@filter", filter.ToString());
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.HasRows)

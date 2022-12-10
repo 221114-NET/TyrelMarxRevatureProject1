@@ -8,6 +8,6 @@ namespace BusinessProject1
 {
     public interface IBusinessLayerClassGetUserReimbursements
     {
-    List<ReimbursementDataClass> GetUserReimbursements(string currentUser);
+    List<ReimbursementDataClass> GetUserReimbursements(string currentUser,TicketFilter filter);
     }
 }

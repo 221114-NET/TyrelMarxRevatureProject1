@@ -7,6 +7,8 @@ using Microsoft.OpenApi.Models;
 using ModelProject1;
 using RepoProject1;
 namespace ApiProject1;
+
+using System.Text.Json.Serialization;
 using Microsoft.Data.SqlClient;
 
 public class Program
@@ -89,7 +91,12 @@ builder.Services.AddAuthorization();
         builder.Services.AddScoped<IRepoClassUpdateUserInformation, RepoClassUpdateUserInformation>();
 
         //builder.Services.AddScoped< , >;
-        
+
+        //this makes enums show up as strings instead of numbers
+        builder.Services
+    .AddControllers()
+    .AddJsonOptions(options => 
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
