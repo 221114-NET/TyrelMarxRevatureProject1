@@ -7,6 +7,6 @@ namespace RepoProject1
 {
     public interface IRepoClassReimbursementRequest
     {
-    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
+    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName, string description);
     }
 }

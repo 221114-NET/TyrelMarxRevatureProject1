@@ -14,9 +14,9 @@ namespace BusinessProject1
     {
         _IRepoClassReimbursementRequest = irepoClassReimbursementRequest;
     }
-        public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
+        public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName, string description)
     {
-        return _IRepoClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
+        return _IRepoClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName, description);
     }
     }
 }

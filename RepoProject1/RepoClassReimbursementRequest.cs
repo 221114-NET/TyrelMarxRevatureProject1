@@ -11,7 +11,7 @@ namespace RepoProject1
     {
     string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
 
-        public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName)
+        public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName, string description)
     {
         string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, 0, 1)";
         try

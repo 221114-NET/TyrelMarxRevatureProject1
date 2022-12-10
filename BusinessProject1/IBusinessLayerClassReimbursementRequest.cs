@@ -7,6 +7,6 @@ namespace BusinessProject1
 {
     public interface IBusinessLayerClassReimbursementRequest
     {
-    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName);
+    string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName, string description);
     }
 }

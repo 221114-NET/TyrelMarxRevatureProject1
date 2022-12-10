@@ -45,10 +45,10 @@ namespace ApiProject1.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
         [HttpPost("ReimbursementRequest")]
-        public string ReimbursementRequest(string ticketType, double reimbursementAmount)
+        public string ReimbursementRequest(string ticketType, double reimbursementAmount, string description)
         {
             string LogedInUserName = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
-            return _iBusinessLayerClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName);
+            return _iBusinessLayerClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName, description);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "user, admin")]
