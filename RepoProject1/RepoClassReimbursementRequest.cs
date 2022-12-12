@@ -13,7 +13,7 @@ namespace RepoProject1
 
         public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName, string description)
     {
-        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, 0, 1)";
+        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus][ReimbursementDescription]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, @ReimbursementDescription 0, 1)";
         try
         {
             using (SqlConnection connection = new SqlConnection(AzureConnectionString))
@@ -24,6 +24,7 @@ namespace RepoProject1
                     command.Parameters.AddWithValue("@ticketType", ticketType);
                     command.Parameters.AddWithValue("@reimbursementAmount", reimbursementAmount);
                     command.Parameters.AddWithValue("@LogedInUserName", LogedInUserName);
+                    command.Parameters.AddWithValue("@ReimbursementDescription", description);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         return "Reimbursement Requested";

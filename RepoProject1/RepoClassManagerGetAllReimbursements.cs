@@ -26,18 +26,11 @@ namespace RepoProject1
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            if (reader.HasRows)
+                            int i = 0;
+                            while (reader.Read())
                             {
-                                int i = 0;
-                                while (reader.Read())
-                                {
-                                    reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(2), reader.GetDouble(3), reader.GetString(4), reader.GetBoolean(5), reader.GetBoolean(6)));
-                                    i++;
-                                }
-                            }
-                            else
-                            {
-                                return reimbursementDataList;
+                                reimbursementDataList.Add(new ReimbursementDataClass(reader.GetInt32(0), reader.GetString(2), reader.GetDouble(3), reader.GetString(4), reader.GetBoolean(5), reader.GetBoolean(6)));
+                                i++;
                             }
                         }
                     }
