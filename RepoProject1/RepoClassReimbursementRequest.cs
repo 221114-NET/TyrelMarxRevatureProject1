@@ -9,34 +9,34 @@ namespace RepoProject1
 {
     public class RepoClassReimbursementRequest : IRepoClassReimbursementRequest
     {
-    string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
+        string AzureConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build().GetSection("ConnectionStrings")["RevDatabase"]!;
 
         public string ReimbursementRequest(string ticketType, double reimbursementAmount, string LogedInUserName, string description)
-    {
-        string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus][ReimbursementDescription]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, @ReimbursementDescription 0, 1)";
-        try
         {
-            using (SqlConnection connection = new SqlConnection(AzureConnectionString))
+            string sql = $"INSERT INTO [dbo].[ReimbursementDataClass]([UserID], [ReimbursementType], [ReimbursementAmount],[ReimbursementApproved],[ReimbursementPendingStatus][ReimbursementDescription]) VALUES((SELECT UserID From [dbo].[UserDataClass] WHERE UserName = @LogedInUserName), @ticketType, @reimbursementAmount, @ReimbursementDescription 0, 1)";
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection = new SqlConnection(AzureConnectionString))
                 {
-                    command.Parameters.AddWithValue("@ticketType", ticketType);
-                    command.Parameters.AddWithValue("@reimbursementAmount", reimbursementAmount);
-                    command.Parameters.AddWithValue("@LogedInUserName", LogedInUserName);
-                    command.Parameters.AddWithValue("@ReimbursementDescription", description);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        return "Reimbursement Requested";
+                        command.Parameters.AddWithValue("@ticketType", ticketType);
+                        command.Parameters.AddWithValue("@reimbursementAmount", reimbursementAmount);
+                        command.Parameters.AddWithValue("@LogedInUserName", LogedInUserName);
+                        command.Parameters.AddWithValue("@ReimbursementDescription", description);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            return "Reimbursement Requested";
+                        }
                     }
                 }
             }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return "Reimbursement Request Failed";
         }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.ToString());
-        }
-        return "Reimbursement Request Failed";
-    }
     }
 }

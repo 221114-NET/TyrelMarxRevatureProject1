@@ -47,7 +47,7 @@ namespace ApiProject1.Controllers
         [HttpPost("ReimbursementRequest")]
         public string ReimbursementRequest(string ticketType, double reimbursementAmount, string description)
         {
-            string LogedInUserName = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            string LogedInUserName = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
             return _iBusinessLayerClassReimbursementRequest.ReimbursementRequest(ticketType, reimbursementAmount, LogedInUserName, description);
         }
 
@@ -55,7 +55,7 @@ namespace ApiProject1.Controllers
         [HttpGet("MyReimbursements")]
         public List<ReimbursementDataClass> GetUserReimbursements(TicketFilter filter)
         {
-            string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
             return _iBusinessLayerClassGetUserReimbursements.GetUserReimbursements(currentUser, filter);
         }
 
@@ -63,7 +63,7 @@ namespace ApiProject1.Controllers
         [HttpPost("UpdateUserInformation")]
         public string UpdateUserInformation(string newUserName, string newUserPass)
         {
-            string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            string currentUser = ($"{this.User.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
             return _iBusinessLayerClassUpdateUserInformation.UpdateUserInformation(newUserName, newUserPass, currentUser);
         }
 

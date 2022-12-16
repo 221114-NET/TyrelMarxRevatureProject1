@@ -28,7 +28,7 @@ public class Program
         //builder.Services.AddSwaggerGen();
 
         //thanks to Code with Julian's youtube for the tutorial ".NET 6 Web API Authentication | Minimal API & Swagger (CRUD)" on how to add authentication to the api
-#region Testing
+#region JWT Authentication
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -71,8 +71,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddAuthorization();
 
-
-        #endregion
+#endregion
 
         builder.Services.AddScoped<IBusinessLayerClassAuthUserLogin, BusinessLayerClassAuthUserLogin>();
         builder.Services.AddScoped<IBusinessLayerClassGetUserReimbursements, BusinessLayerClassGetUserReimbursements>();
